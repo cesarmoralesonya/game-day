@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: storefront-blue
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: storefront-blue
+  template:
+    metadata:
+      labels:
+        app: storefront-blue
+    spec:
+      containers:
+      - name: storefront-container
+        image: 031933477616.dkr.ecr.us-east-1.amazonaws.com/unicorn-container-repo:latest
+        ports:
+        - containerPort: 5000
+        resources:
+          limits:
+            memory: "200Mi"
+            cpu: "400m"
+        env:
+          - name: PROXY_URL
+            value: http://proxy.unicorn.rentals/
+          - name: STOREFRONT_COLOR
+            value: blue
